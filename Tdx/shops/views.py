@@ -9,8 +9,8 @@ from rest_framework.views import APIView
 
 
 class ShopViewSet(viewsets.ModelViewSet):
-    serializer_class = ShopSerializer
     queryset = Shop.objects.all()
+    serializer_class = ShopSerializer
 
     # def perform_create(self, serializer):
     #     address = serializer.initial_data['location']
@@ -21,7 +21,7 @@ class ShopViewSet(viewsets.ModelViewSet):
     #     print(pnt)
     #     serializer.save(location=pnt)
 
-    def queryset(self):
+    def get_queryset(self):
         qs = super().get_queryset()
         latitude = self.request.query_params.get('lat', None)
         longitude = self.request.query_params.get('lng', None)
