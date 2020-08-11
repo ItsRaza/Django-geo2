@@ -4,8 +4,8 @@ from django.contrib.gis.db import models
 
 
 class Shop(models.Model):
-    name = models.CharField(max_length=200, null=True)
-    address = models.CharField(max_length=300, null=True)
+    name = models.CharField(max_length=200, default="bla")
+    address = models.CharField(max_length=300, default='blabla')
     location = models.PointField(null=True, blank=True)
 
     def __str__(self):
