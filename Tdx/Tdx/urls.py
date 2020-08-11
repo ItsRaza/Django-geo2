@@ -25,6 +25,5 @@ router.register(r'shop', views.ShopViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('api/myview', views.MyView.as_view(), name='myview'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

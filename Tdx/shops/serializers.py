@@ -6,4 +6,5 @@ class ShopSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Shop
-        fields = ['location']
+        fields = ['id', 'name', 'address', 'location']
+        read_only_fields = ['location', ]
