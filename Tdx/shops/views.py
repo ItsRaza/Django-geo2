@@ -25,13 +25,19 @@ class ShopViewSet(viewsets.ModelViewSet):
         qs = super().get_queryset()
         latitude = self.request.query_params.get('lat', None)
         longitude = self.request.query_params.get('lng', None)
-
+        distance_q = self.request.query_params.get('dist', None)
+        shop_list = list()
         if latitude and longitude:
             pnt = GEOSGeometry(
                 'POINT(' + str(longitude) + ' ' + str(latitude)+')', srid=4326)
-            qs = qs.annotate(distance=Distance(
-                'location', pnt)).order_by('distance')
-        return qs
+            # distance = Distance('location', pnt)
+            # qs = qs.annotate(distance)
+
+            for shop in Shop.objects.all():
+                if(Distance('location', pnt) <= float(distance_q)):
+                    shop_list
+
+        return shop_list
 
 
 # def findDist(self):
