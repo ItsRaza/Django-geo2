@@ -5,6 +5,7 @@ from rest_framework import generics
 import geocoder
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.db.models.functions import Distance
+# from django.contrib.gis.db.models.functions import Distance
 from rest_framework.views import APIView
 
 
@@ -25,19 +26,30 @@ class ShopViewSet(viewsets.ModelViewSet):
         qs = super().get_queryset()
         latitude = self.request.query_params.get('lat', None)
         longitude = self.request.query_params.get('lng', None)
-        distance_q = self.request.query_params.get('dist', None)
-        shop_list = list()
+
         if latitude and longitude:
             pnt = GEOSGeometry(
                 'POINT(' + str(longitude) + ' ' + str(latitude)+')', srid=4326)
-            # distance = Distance('location', pnt)
-            # qs = qs.annotate(distance)
+            qs = Shop.objects.filter(location__dwithin=(pnt, 50000)).annotate(
+                distance=Distance('location', pnt)).order_by('distance')
+        return qs
 
-            for shop in Shop.objects.all():
-                if(Distance('location', pnt) <= float(distance_q)):
-                    shop_list
+    # def get_queryset(self):
+    #     qs = super().get_queryset()
+    #     latitude = self.request.query_params.get('lat', None)
+    #     longitude = self.request.query_params.get('lng', None)
+    #     # distance_q = self.request.query_params.get('dist', None)
+    #     shop_list = list()
+    #     if latitude and longitude:
+    #         pnt = GEOSGeometry(
+    #             'POINT(' + str(longitude) + ' ' + str(latitude)+')', srid=4326)
+    #         # distance =
+    #         qs = qs.annotate(distance=Distance(
+    #             'location', pnt)).order_by('distance')
+    #         # qs = Shop.objects.filter(
+    #         #     distance__lt=(pnt, Distance(km=5)))
 
-        return shop_list
+    #     return qs
 
 
 # def findDist(self):

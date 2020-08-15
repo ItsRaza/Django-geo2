@@ -1,4 +1,5 @@
 from django.contrib.gis.geos import Point
+from django.db.models.manager import Manager
 from django.contrib.gis.measure import Distance
 from django.contrib.gis.db import models
 
@@ -6,7 +7,8 @@ from django.contrib.gis.db import models
 class Shop(models.Model):
     name = models.CharField(max_length=200, default="bla")
     address = models.CharField(max_length=300, default='blabla')
-    location = models.PointField(null=True, blank=True)
+    location = models.PointField(null=True, blank=True, geography=True)
+    # objects = models.GeoManager(null=True)
 
     def __str__(self):
         return self.location
