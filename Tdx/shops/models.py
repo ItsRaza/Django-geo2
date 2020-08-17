@@ -22,3 +22,11 @@ class Shop(models.Model):
     #     shop2 = Shop()
     #     shop2.location = point
     #     shop2.save()
+
+
+class items(models.Model):
+    name = models.CharField(max_length=200, default='item')
+    belonging_shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
