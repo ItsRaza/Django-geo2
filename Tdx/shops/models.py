@@ -6,7 +6,9 @@ from django.contrib.gis.db import models
 
 class Company(models.Model):
     name = models.CharField(max_length=200, default='Company', null=True)
-    shop_id = models.IntegerField(null=True)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Shop(models.Model):
@@ -14,14 +16,17 @@ class Shop(models.Model):
     address = models.CharField(max_length=300, default='blabla')
     location = models.PointField(null=True, blank=True, geography=True)
     company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, null=True, related_name='shop')
+        Company, on_delete=models.CASCADE, null=True, related_name='shops')
     # objects = models.GeoManager(null=True)
 
-    class Meta:
-        unique_together = ('company', 'name')
+    def __unicode__(self):
+        return '%s %s' % (self.name, self.address)
 
-    def __str__(self):
-        return self.location
+    # class Meta:
+    #     unique_together = ('company', 'name')
+
+    # def __str__(self):
+    #     return self.location
 
     # def insertTwoPoints(self):
     #     # point = Point(x=12.734534, y=77.2342)

@@ -10,13 +10,13 @@ class ShopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shop
-        fields = ['id', 'name', 'address', 'location', 'distance']
+        fields = ['id', 'name', 'address', 'location', 'distance', 'company']
         # read_only_fields = ['distance']
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    shop = serializers.RelatedField(many=True)
+    shops = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Company
-        fields = ['id', 'name', 'shop_id']
+        fields = ['id', 'name', 'shops']
