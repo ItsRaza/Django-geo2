@@ -20,6 +20,7 @@ from shops import views
 
 router = routers.DefaultRouter()
 router.register(r'shop', views.ShopViewSet)
+router.register(r'company', views.CompanyViewSet)
 
 
 urlpatterns = [

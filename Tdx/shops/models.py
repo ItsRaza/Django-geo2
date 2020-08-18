@@ -4,11 +4,21 @@ from django.contrib.gis.measure import Distance
 from django.contrib.gis.db import models
 
 
+class Company(models.Model):
+    name = models.CharField(max_length=200, default='Company', null=True)
+    shop_id = models.IntegerField(null=True)
+
+
 class Shop(models.Model):
     name = models.CharField(max_length=200, default="bla")
     address = models.CharField(max_length=300, default='blabla')
     location = models.PointField(null=True, blank=True, geography=True)
+    company = models.ForeignKey(
+        Company, on_delete=models.CASCADE, null=True, related_name='shop')
     # objects = models.GeoManager(null=True)
+
+    class Meta:
+        unique_together = ('company', 'name')
 
     def __str__(self):
         return self.location
@@ -23,10 +33,13 @@ class Shop(models.Model):
     #     shop2.location = point
     #     shop2.save()
 
+    # shop = models.ForeignKey(
+    # Shop, on_delete=models.CASCADE, null=True, related_name='company')
 
-class items(models.Model):
-    name = models.CharField(max_length=200, default='item')
-    belonging_shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    # order_by = 'name'
 
-    def __str__(self):
-        return self.name
+    # def __unicode__(self):
+    #     return '%s' % (self.name)
+
+    # def __str__(self):
+    #     return self.shop.name or ''

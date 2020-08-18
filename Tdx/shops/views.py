@@ -1,6 +1,6 @@
-from .models import Shop
+from .models import Shop, Company
 from rest_framework import viewsets
-from .serializers import ShopSerializer
+from .serializers import ShopSerializer, CompanySerializer
 from rest_framework import generics
 import geocoder
 from django.contrib.gis.geos import GEOSGeometry
@@ -33,6 +33,14 @@ class ShopViewSet(viewsets.ModelViewSet):
             qs = Shop.objects.filter(location__dwithin=(pnt, 50000)).annotate(
                 distance=Distance('location', pnt)).order_by('distance')
         return qs
+
+
+class CompanyViewSet(viewsets.ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+    # def get_queryset(self):
+    #     qs = super().get_queryset()
 
     # def get_queryset(self):
     #     qs = super().get_queryset()
