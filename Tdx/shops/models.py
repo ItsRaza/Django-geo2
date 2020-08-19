@@ -16,7 +16,7 @@ class Shop(models.Model):
     address = models.CharField(max_length=300, default='blabla')
     location = models.PointField(null=True, blank=True, geography=True)
     company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, null=True, related_name='shops')
+        Company, on_delete=models.CASCADE, null=True)
     # objects = models.GeoManager(null=True)
 
     def __unicode__(self):

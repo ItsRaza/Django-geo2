@@ -39,6 +39,16 @@ class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
+
+class CompanyView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = Companyserializer(data=request.data)
+        if serializer.is_valid():
+            question = serializer.save()
+            serializer = Companyserializer(question)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     # def get_queryset(self):
     #     qs = super().get_queryset()
 
