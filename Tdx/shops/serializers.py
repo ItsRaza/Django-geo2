@@ -1,12 +1,16 @@
 from rest_framework import serializers
 from shops.models import Shop, Company
 from rest_framework import viewsets
+from django.core.serializers import serialize
 
 
 class ShopSerializer(serializers.ModelSerializer):
 
     distance = serializers.DecimalField(
         source='distance.km', max_digits=10, decimal_places=2, required=False, read_only=True)
+
+    serialize('geojson', Shop.objects.all(),
+              geometry_field='location', fields=('name', 'address'))
 
     class Meta:
         model = Shop
