@@ -22,13 +22,13 @@ class Shop(models.Model):
     def __unicode__(self):
         return '%s %s' % (self.name, self.address)
 
-    @property
-    def longitude(self):
-            return self.location.x
+    # @property
+    # def longitude(self):
+    #     return self.location.x
 
-    @property
-    def latitude(self):
-            return self.location.y
+    # @property
+    # def latitude(self):
+    #     return self.location.y
 
     # class Meta:
     #     unique_together = ('company', 'name')
