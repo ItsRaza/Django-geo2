@@ -2,6 +2,7 @@ from rest_framework import serializers
 from shops.models import Shop, Company
 from rest_framework import viewsets
 from django.core.serializers import serialize
+import json
 
 
 class ShopSerializer(serializers.ModelSerializer):
@@ -14,8 +15,19 @@ class ShopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shop
-        fields = ['id', 'name', 'address', 'location', 'distance']
+        fields = ['id', 'name', 'address', 'location', 'distance', 'test']
+
         # read_only_fields = ['distance']
+
+    def to_representation(self, obj):
+        data = super().to_representation(obj)
+        # manipulate data['cashflows'] to group by month
+        strr = json.dumps(
+            {'lat': data['location']['coordinates'][0], 'long': data['location']['coordinates'][1]})
+        st = strr.replace("'", "\\")
+        retData = json.loads(st)
+        data['location'] = retData
+        return data
 
 
 class CompanySerializer(serializers.ModelSerializer):

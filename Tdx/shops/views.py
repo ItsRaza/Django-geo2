@@ -30,7 +30,7 @@ class ShopViewSet(viewsets.ModelViewSet):
         if latitude and longitude:
             pnt = GEOSGeometry(
                 'POINT(' + str(longitude) + ' ' + str(latitude)+')', srid=4326)
-            qs = Shop.objects.filter(location__dwithin=(pnt, 50000)).annotate(
+            qs = Shop.objects.filter(location__dwithin=(pnt, 5000000)).annotate(
                 distance=Distance('location', pnt)).order_by('distance')
         return qs
 

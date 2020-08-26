@@ -2,6 +2,7 @@ from django.contrib.gis.geos import Point
 from django.db.models.manager import Manager
 from django.contrib.gis.measure import Distance
 from django.contrib.gis.db import models
+import json
 
 
 class Company(models.Model):
@@ -17,10 +18,8 @@ class Shop(models.Model):
     location = models.PointField(null=True, blank=True, geography=True)
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, null=True)
+    test = models.IntegerField(null=True, default=14)
     # objects = models.GeoManager(null=True)
-
-    def __unicode__(self):
-        return '%s %s' % (self.name, self.address)
 
     # @property
     # def longitude(self):
