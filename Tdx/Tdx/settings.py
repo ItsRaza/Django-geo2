@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'rest_framework',
     'shops',
-    'rest_framework_gis',
+
 
 ]
 

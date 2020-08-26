@@ -21,9 +21,12 @@ class Shop(models.Model):
     test = models.IntegerField(null=True, default=14)
     # objects = models.GeoManager(null=True)
 
-    # @property
-    # def longitude(self):
-    #     return self.location.x
+    @property
+    def coordinates(self):
+        loc = self.location
+        res = json.dumps({'Lat': loc[1], 'long': loc[0]})
+        retData = json.loads(res)
+        return retData
 
     # @property
     # def latitude(self):
